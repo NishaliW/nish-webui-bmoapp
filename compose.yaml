@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+  nish-ui-app:
+    image: nish-webui:version4 #image to be built
+    build: . #docker file location
+    container_name: nishali
+    ports:
+      - 1234:80
