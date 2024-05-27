@@ -45,4 +45,6 @@ jobs:
 
       - name: rebuild image in dockerhub format and push it to dockerhub 
         run: |
-          echo "rebuilding docker image"
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/BMO-WebUI
+          docker run ${{ secrets.DOCKERHUB_USERNAME }}/BMO-WebUI
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/BMO-WebUI
