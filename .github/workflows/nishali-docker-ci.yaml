@@ -1,0 +1,20 @@
+name: nishali app containerization pipelinbe
+
+#Trigger section
+on:
+  push:
+    branches:
+      - "main"
+
+#Jobs
+jobs:
+  nish-image-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: run some basic commands on above server to do some verifications
+        run: 
+          uname -r
+          whoami
+          cat /etc/os-release
+          docker version
+          docker-compose version
