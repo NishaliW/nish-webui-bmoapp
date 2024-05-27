@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: run some basic commands on above server to do some verifications
-        run: 
+        run: |
           uname -r
           whoami
           cat /etc/os-release
