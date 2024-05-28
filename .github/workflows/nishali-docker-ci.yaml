@@ -18,6 +18,7 @@ jobs:
           cat /etc/os-release
           docker version
           docker-compose version
+          sonarqube-scanner --version
 
       - name: using pre-designed github workflow to get copy gitrepo code to runner machine
         uses: actions/checkout@v4
