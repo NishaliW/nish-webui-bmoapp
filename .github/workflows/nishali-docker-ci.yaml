@@ -48,7 +48,7 @@ jobs:
         with:
           context: . #location of docker file
           push: true
-          tags: docker.io/${{ rets.DOCKERHUB_USERNAME }}/nishbmo-ui:uiversion001
+          tags: docker.io/${{ secrets.DOCKERHUB_USERNAME }}/nishbmo-ui:uiversion001
 
       - name: logout from docker
         run: docker logout
