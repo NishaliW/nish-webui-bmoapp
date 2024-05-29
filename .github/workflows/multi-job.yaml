@@ -8,22 +8,27 @@ on:
 
 #Create multiple jobs
 jobs:
-  code-check-job:
-    runs-on: ubuntu-latest
-    steps:
-      - name: checking only
-        run: |
-          echo "Just checking"
-          whoami
 
   sast-job:
     runs-on: self-hosted
-    needs: code-check-job # it will wait for job1 to finish
     steps:
       - name: checking docker version and sonarscanner
         run: |
           docker version 
           sonar-scanner --version
+
+      - name: fetching git code
+        uses: actions/checkout@v4
+
+      - name: official sonarqube scan 
+        uses: SonarSource/sonarqube-scan-action@v2.1.0
+        with:
+          projectBaseDir: .
+          args: >
+            -Dsonar.projectKey=nishali-python-project
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
   build-job:
     runs-on: macos-latest
