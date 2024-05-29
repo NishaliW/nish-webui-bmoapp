@@ -62,17 +62,12 @@ jobs:
           echo "using curl" 
           curl -f "http://localhost:1234/health.html"
 
-      - name: pushing above image to aws ecr
-        #uses: actions/checkout@v2
-        uses: docker://ghcr.io/kciter/aws-ecr-action:latest
+      - name: Build image
+        uses: bitovi/github-actions-ecr-publish@v0.1.0
         with:
-          access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          account_id: 751136288263
-          repo: bmo-webui-app
-          region: us-east-1
-          tags: nishaliappv2
-          path: C:\Users\user
-          #create_repo: true
-          #set_repo_policy: true
-          #repo_policy_file: repo-policy.json
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_default_region: us-east-1
+          aws_ecr_repo_name: bmo-webui-app
+          image_tag: nishaliappv2
+          working_directory: C:\Users\user
