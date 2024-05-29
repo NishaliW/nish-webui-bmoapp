@@ -22,8 +22,8 @@ jobs:
     steps:
       - name: checking docker version and sonarscanner
         run: |
-          docker version
-          sonar-scanner --version
+          pwd 
+          whoami
 
   build-job:
     runs-on: macos-latest
