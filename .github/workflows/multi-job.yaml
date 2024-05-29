@@ -17,13 +17,13 @@ jobs:
           whoami
 
   sast-job:
-    runs-on: windows-latest
+    runs-on: self-hosted
     needs: code-check-job # it will wait for job1 to finish
     steps:
       - name: checking docker version and sonarscanner
         run: |
-          pwd 
-          whoami
+          docker version 
+          sonar-scanner --version
 
   build-job:
     runs-on: macos-latest
