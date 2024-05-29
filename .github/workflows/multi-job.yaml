@@ -1,0 +1,35 @@
+name: nishali app containerization pipelinbe
+
+#Trigger section
+on:
+  push:
+    branches:
+      - "dev"
+
+#Create multiple jobs
+jobs:
+  code-check-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checking only
+        run: |
+          echo "Just checking"
+          whoami
+
+  sast-job:
+    runs-on: self-hosted
+    needs: code-check-job # it will wait for job1 to finish
+    steps:
+      - name: checking docker version and sonarscanner
+        run: |
+          docker version
+          sonar-scanner --version
+
+  build-job:
+    runs-on: macos-latest
+    needs: sast-job # it will wait for job2 to finish
+    steps:
+      - name: just checking
+        run: |
+          echo "python version checking"
+          python -V
