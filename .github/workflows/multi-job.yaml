@@ -20,21 +20,19 @@ jobs:
       - name: fetching git code
         uses: actions/checkout@v4
 
-    #  - name: official sonarqube scan 
-    #    uses: SonarSource/sonarqube-scan-action@v2.1.0
-    #    with:
-    #      projectBaseDir: .
-    #      args: >
-    #        -Dsonar.projectKey=nishali-python-project
-    #    env:
-    #      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-    #      SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-
       - name: using local sonar-scanner
         run: |
           pwd 
           sonar-scanner -D"sonar.projectKey=nishali-python-project" -D"sonar.sources=." -D"sonar.host.url=${{ secrets.SONAR_HOST_URL }}" -D"sonar.token=${{ secrets.SONAR_TOKEN }}"
 
+      - name: upload artifacts
+        uses: actions/upload-artifact@v4 
+        with:
+          name: nishali-artifact
+          path: |
+            .
+            !**/.git*
+            !**/*.md
 
   build-job:
     runs-on: macos-latest
@@ -42,5 +40,24 @@ jobs:
     steps:
       - name: just checking
         run: |
-          echo "python version checking"
-          python -V
+          echo "docker related details"
+          docker version
+          docker-compose version 
+
+      - name: downloading artifact
+        uses: actions/download-artifact@v4 
+        with:
+          name: nishali-artifact
+          path: .
+
+      - name: docker compose to build and test
+        run: |
+          ls -a 
+          docker-compose up -d --build 
+          sleep 2
+          docker-compose ps 
+
+      - name: verify healthcheck page by accessing it 
+        run: |
+          echo "using curl" 
+          curl -f "http://localhost:1234/health.html"
