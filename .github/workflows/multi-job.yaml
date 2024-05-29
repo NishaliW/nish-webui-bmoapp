@@ -63,11 +63,15 @@ jobs:
           echo "using curl" 
           curl -f "http://localhost:1234/health.html"
 
-      - name: Build image
-        uses: bitovi/github-actions-ecr-publish@v0.1.0
-        with:
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws_default_region: us-east-1
-          aws_ecr_repo_name: bmo-webui-app
-          image_tag: nishaliappv2
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build, tag, and push docker image to Amazon ECR
+        env:
+          REGISTRY: 751136288263.dkr.ecr.us-east-1.amazonaws.com
+          REPOSITORY: bmo-webui-app
+          IMAGE_TAG: nishaliappv2
+        run: |
+          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
