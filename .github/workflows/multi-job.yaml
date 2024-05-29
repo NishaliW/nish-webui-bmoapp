@@ -69,7 +69,7 @@ jobs:
           access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           account_id: 751136288263
-          repo: dbmo-webui-app
+          repo: bmo-webui-app
           region: us-east-1
           tags: nishaliappv2
           #create_repo: true
