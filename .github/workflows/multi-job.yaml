@@ -61,3 +61,17 @@ jobs:
         run: |
           echo "using curl" 
           curl -f "http://localhost:1234/health.html"
+
+      - name: pushing above image to aws ecr
+        #uses: actions/checkout@v2
+        uses: docker://ghcr.io/kciter/aws-ecr-action:latest
+        with:
+          access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          account_id: 751136288263
+          repo: dbmo-webui-app
+          region: us-east-1
+          tags: nishaliappv2
+          #create_repo: true
+          #set_repo_policy: true
+          #repo_policy_file: repo-policy.json
