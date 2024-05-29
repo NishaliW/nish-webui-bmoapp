@@ -72,6 +72,7 @@ jobs:
           repo: bmo-webui-app
           region: us-east-1
           tags: nishaliappv2
+          path: C:\Users\user
           #create_repo: true
           #set_repo_policy: true
           #repo_policy_file: repo-policy.json
