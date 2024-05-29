@@ -20,15 +20,21 @@ jobs:
       - name: fetching git code
         uses: actions/checkout@v4
 
-      - name: official sonarqube scan 
-        uses: SonarSource/sonarqube-scan-action@v2.1.0
-        with:
-          projectBaseDir: .
-          args: >
-            -Dsonar.projectKey=nishali-python-project
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+    #  - name: official sonarqube scan 
+    #    uses: SonarSource/sonarqube-scan-action@v2.1.0
+    #    with:
+    #      projectBaseDir: .
+    #      args: >
+    #        -Dsonar.projectKey=nishali-python-project
+    #    env:
+    #      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    #      SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+      - name: using local sonar-scanner
+        run: |
+          pwd 
+          sonar-scanner -D"sonar.projectKey=nishali-python-project" -D"sonar.sources=." -D"sonar.host.url=${{ secrets.SONAR_HOST_URL }}" -D"sonar.token=${{ secrets.SONAR_TOKEN }}"
+
 
   build-job:
     runs-on: macos-latest
