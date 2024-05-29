@@ -35,13 +35,13 @@ jobs:
             !**/*.md
 
   build-job:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     needs: sast-job # it will wait for job2 to finish
     steps:
       - name: just checking
         run: |
           echo "docker related details"
-          docker version
+          docker version 
           docker-compose version 
 
       - name: downloading artifact
