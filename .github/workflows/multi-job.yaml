@@ -33,6 +33,7 @@ jobs:
             .
             !**/.git*
             !**/*.md
+            !**/.scannerwork
 
   build-job:
     runs-on: ubuntu-latest
