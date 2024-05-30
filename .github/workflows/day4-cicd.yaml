@@ -112,4 +112,3 @@ jobs:
           npx cdk bootstrap 
           npx cdk deploy --no-rollback --require-approval never 
           sleep 30
-          npx cdk destroy --force
