@@ -88,11 +88,11 @@ jobs:
         with:
           node-version: '20'
 
-      - name: download artifacts 
-        uses: actions/download-artifact@v4 
+      - name: downloading artifacts 
+        uses: actions/download-artifact@v4
         with:
           name: nishali-artifact
-          path: .
+          path: . 
 
       - name: install npm modules for ecs 
         run: |
