@@ -43,22 +43,22 @@ jobs:
           sleep 1
           docker-compose logs
 
-      - name: Build an image from dockerfile
+      - name: Build an image from Dockerfile
         run: |
-          cd python-app-secret 
-          docker build -t docker.io/${{ secrets.DOCKERHUB_USERNAME }}nishalipython:bmov${{ github.sha }} .
+          cd python-app-secret
+          docker build -t docker.io/${{ secrets.DOCKERHUB_USERNAME }}/nishalipython:bmov${{ github.sha }} .
 
-      - name: trivy scanner
+      - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.20.0
         with:
-          image-ref: 'docker.io/${{ secrets.DOCKERHUB_USERNAME }}nishalipython:bmov${{ github.sha }}'
+          image-ref: 'docker.io/${{ secrets.DOCKERHUB_USERNAME }}/nishalipython:bmov${{ github.sha }}'
           format: 'table'
-          exit-code: '0'
+          exit-code: '0' # exit code non zero terminate pipeline
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
 
-      - name: login to dockerhub
+      - name: try to login from runner to docker hub account 
         uses: docker/login-action@v3 
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -67,4 +67,4 @@ jobs:
       - name: pushing image to docker hub 
         run: |
           echo "please wait while image is getting pushed"
-          docker push docker.io/${{ secrets.DOCKERHUB_USERNAME }}nishalipython:bmov${{ github.sha }}
+          docker push docker.io/${{ secrets.DOCKERHUB_USERNAME }}/nishalipython:bmov${{ github.sha }}
