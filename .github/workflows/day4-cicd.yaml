@@ -98,7 +98,6 @@ jobs:
         run: |
           ls -a 
           node -v 
-          cd nishali-ecs
           npm install 
 
       - name: setup aws login details 
