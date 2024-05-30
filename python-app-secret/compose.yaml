@@ -1,0 +1,7 @@
+version: '3.8'
+services:
+  nishali:
+    image: nishalipython:bmov1
+    build: .
+    container_name: nishalipyc1
+    tty:  true

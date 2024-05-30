@@ -1,0 +1,34 @@
+name: nishali app containerization pipelinbe
+
+#Trigger section
+on:
+  push:
+    branches:
+      - "dev"
+
+#Jobs
+jobs:
+  nish-image-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: run some basic commands on above server to do some verifications
+        run: |
+          uname -r
+          whoami
+          cat /etc/os-release
+          docker version
+          docker-compose version
+          #sonarqube-scanner --version
+
+      - name: using pre-designed github workflow to get copy gitrepo code to runner machine
+        uses: actions/checkout@v4
+
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@v2.1.0 # Ex: v2.1.0, See the latest version at https://github.com/marketplace/actions/official-sonarqube-scan
+        with:
+          projectBaseDir: ./python-app-secret
+          args: >
+            -Dsonar.projectKey=nishali-project
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}

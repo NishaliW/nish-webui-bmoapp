@@ -4,7 +4,7 @@ name: nishali app containerization pipelinbe
 on:
   push:
     branches:
-      - "dev"
+      - "dev1"
 
 #Create multiple jobs
 jobs:
