@@ -44,4 +44,11 @@ jobs:
           docker-compose logs
 
       - name: checking trivy status
-        run: trivy -v
+        uses: aquasecurity/trivy-action@0.20.0
+        with:
+          image-ref: 'nishalipython:bmov1'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
