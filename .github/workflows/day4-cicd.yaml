@@ -70,16 +70,17 @@ jobs:
           echo "please wait while image is getting pushed"
           docker push docker.io/${{ secrets.DOCKERHUB_USERNAME }}/nishalipython:bmov${{ github.sha }}
 
-      - name: upload artifacts
-        uses: actions/upload-artifact@v4 
+      - name: upload artifacts 
+        uses: actions/upload-artifact@v4
         with:
           name: nishali-artifact
           path: |
-            ./nishali-ecs 
+            ./nishali-ecs
 
 
   nish-cdk-build:
     runs-on: ubuntu-latest
+    needs: nish-image-build
     steps:
 
       - name: installing node 20 
