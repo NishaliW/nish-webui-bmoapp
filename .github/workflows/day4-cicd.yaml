@@ -26,9 +26,10 @@ jobs:
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@v2.1.0 # Ex: v2.1.0, See the latest version at https://github.com/marketplace/actions/official-sonarqube-scan
         with:
-          projectBaseDir: ./python-app-secret
+          projectBaseDir: .
           args: >
             -Dsonar.projectKey=nishali-project
+            -Dsonar.exclusions=ecr/**,Dockerfile,compose.yaml,*.html
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
@@ -69,13 +70,32 @@ jobs:
           echo "please wait while image is getting pushed"
           docker push docker.io/${{ secrets.DOCKERHUB_USERNAME }}/nishalipython:bmov${{ github.sha }}
 
+      - name: upload artifacts
+        uses: actions/upload-artifact@v4 
+        with:
+          name: nishali-artifact
+          path: |
+            ./nishali-ecs 
+
+
+  nish-cdk-build:
+    runs-on: ubuntu-latest
+    steps:
+
       - name: installing node 20 
         uses: actions/setup-node@v2 
         with:
           node-version: '20'
 
+      - name: download artifacts 
+        uses: actions/download-artifact@v4 
+        with:
+          name: nishali-artifact
+          path: .
+
       - name: install npm modules for ecs 
         run: |
+          ls -a 
           node -v 
           cd nishali-ecs
           npm install 
@@ -92,4 +112,5 @@ jobs:
           cd nishali-ecs
           npx cdk bootstrap 
           npx cdk deploy --no-rollback --require-approval never 
+          sleep 30
           npx cdk destroy --force
