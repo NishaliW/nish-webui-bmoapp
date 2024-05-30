@@ -109,7 +109,6 @@ jobs:
 
       - name: cdk deploy ecs code 
         run: |
-          cd nishali-ecs
           npx cdk bootstrap 
           npx cdk deploy --no-rollback --require-approval never 
           sleep 30
