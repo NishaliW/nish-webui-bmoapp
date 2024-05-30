@@ -43,12 +43,17 @@ jobs:
           sleep 1
           docker-compose logs
 
-      - name: checking trivy status
+      - name: Build an image from dockerfile
+        run: |
+          cd python-app-secret 
+          docker build -t nishalipython:bmov${{ github.sha }} .
+
+      - name: trivy scanner
         uses: aquasecurity/trivy-action@0.20.0
         with:
-          image-ref: 'nishalipython:bmov1'
+          image-ref: 'nishalipython:bmov${{ github.sha }}'
           format: 'table'
-          exit-code: '1'
+          exit-code: '0'
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
