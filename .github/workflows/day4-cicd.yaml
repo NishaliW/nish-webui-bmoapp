@@ -111,4 +111,3 @@ jobs:
         run: |
           # npx cdk bootstrap 
           npx cdk deploy --context imageTag=${{ github.sha }} --require-approval never 
-          npx cdk destroy

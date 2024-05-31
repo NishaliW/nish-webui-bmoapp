@@ -49,7 +49,7 @@ export class NishaliEcsStack extends cdk.Stack {
     const service = new ecs.FargateService(this,'ashuECSserviceCDK',{
       cluster,
       taskDefinition: ashuTaskDef,
-      serviceName: 'nishali-svc-bycdk2',
+      serviceName: 'nishali-svc-bycdk',
       desiredCount: 2,
       assignPublicIp: true,
       securityGroups: [ashusecgroup]   // attaching security group 
