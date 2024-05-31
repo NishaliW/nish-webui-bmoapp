@@ -13,7 +13,7 @@ export class AshuEcsStack extends cdk.Stack {
     });
     // defining ECS cluster info 
     const cluster = new ecs.Cluster(this,'ashu-ecs-cluster',{
-      clusterName: 'ashu-ecs-bycdk', // change cluster name 
+      clusterName: 'nishali-ecs-bycdk', // change cluster name 
       vpc: vpc,
       enableFargateCapacityProviders: true ,
       containerInsights: true // enable cloudwatch monitoring 
