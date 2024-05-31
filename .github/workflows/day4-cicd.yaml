@@ -115,6 +115,7 @@ jobs:
     
   nish-app-deploy-eks:
     runs-on: ubuntu-latest
+    needs: nish-cdk-build
     steps:
 
       - name: checking kubectl 
