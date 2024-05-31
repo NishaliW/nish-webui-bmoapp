@@ -20,6 +20,12 @@ export class NishaliEcsStack extends cdk.Stack {
       containerInsights: true // enable cloudwatch monitoring 
     });
 
+    // define container image tag as variable
+    const imageTag = this.node.tryGetContext('imageTag');
+    if (!imageTag) {
+      throw new Error('context variable name is required');
+    };
+
     // task Definition of farget launch type 
     const ashuTaskDef = new ecs.FargateTaskDefinition(this,'ashu-frg-task1',{
       cpu:  256,
@@ -28,9 +34,25 @@ export class NishaliEcsStack extends cdk.Stack {
     });
     // adding container info 
     const container = ashuTaskDef.addContainer('ashucdkc1',{
-      image: ecs.ContainerImage.fromRegistry('dockerashu/ashubmo:nginxuiv1'),
+      image: ecs.ContainerImage.fromRegistry('dockerashu/ashubmo:${imageTag}'),
       memoryLimitMiB: 256,
       portMappings: [{ containerPort: 80 }]
+    });
+
+    // creating security group 
+    const ashusecgroup = new ec2.SecurityGroup(this,'ashufirewallgrp',{
+      vpc: vpc,
+      description: 'allow ingress rules for 80 port'
+    });
+    ashusecgroup.addIngressRule(ec2.Peer.anyIpv4(),ec2.Port.tcp(80),'allow http traffic');
+
+    const service = new ecs.FargateService(this,'ashuECSserviceCDK',{
+      cluster,
+      taskDefinition: ashuTaskDef,
+      serviceName: 'nishali-svc-bycdk2',
+      desiredCount: 2,
+      assignPublicIp: true,
+      securityGroups: [ashusecgroup]   // attaching security group 
     });
 
   }
