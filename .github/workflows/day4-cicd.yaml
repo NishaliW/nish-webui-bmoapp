@@ -111,3 +111,13 @@ jobs:
         run: |
           # npx cdk bootstrap 
           npx cdk deploy --context imageTag=${{ github.sha }} --require-approval never 
+
+    
+  nish-app-deploy-eks:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: checking kubectl 
+        run: |
+          echo "Checking kubctl version"
+          kubectl version --client

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
-import { NishaliEcsStack1 } from '../lib/nishali-ecs-stack';
+import { NishaliEcsStack } from '../lib/nishali-ecs-stack';
 
 const app = new cdk.App();
 new NishaliEcsStack(app, 'NishaliEcsStack', {
