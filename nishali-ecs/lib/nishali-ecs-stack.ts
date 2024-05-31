@@ -34,7 +34,7 @@ export class NishaliEcsStack extends cdk.Stack {
     });
     // adding container info 
     const container = ashuTaskDef.addContainer('ashucdkc1',{
-      image: ecs.ContainerImage.fromRegistry('dockerashu/ashubmo:${imageTag}'),
+      image: ecs.ContainerImage.fromRegistry(`dockerashu/ashubmoweb:bmov${imageTag}`),
       memoryLimitMiB: 256,
       portMappings: [{ containerPort: 80 }]
     });
