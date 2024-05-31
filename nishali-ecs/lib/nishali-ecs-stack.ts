@@ -4,7 +4,7 @@ import * as ec2 from 'aws-cdk-lib/aws-ec2'
 import * as ecs from  'aws-cdk-lib/aws-ecs'
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
-export class NishaliEcsStack extends cdk.Stack {
+export class NishaliEcsStack1 extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
@@ -38,7 +38,7 @@ export class NishaliEcsStack extends cdk.Stack {
     });
     // adding container info 
     const container = ashuTaskDef.addContainer('ashucdkc1',{
-      image: ecs.ContainerImage.fromRegistry(`dockerashu/ashubmoweb:bmov${imageTag}`),
+      image: ecs.ContainerImage.fromRegistry(`nishaliwij/nishalibmoweb:bmov${imageTag}`),
       memoryLimitMiB: 256,
       portMappings: [{ containerPort: 80 }]
     });
